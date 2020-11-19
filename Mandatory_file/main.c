@@ -45,7 +45,7 @@ size_t  ft_strlen(const char *s);
 ssize_t ft_write(int fildes, const void *buf, size_t nbyte);
 ssize_t ft_read(int fildes, void *buf, size_t nbyte);
 
-void    print_tab(int num)
+void    print_spaces(int num)
 {
     while (num-- > 0)
         printf(" ");
@@ -71,7 +71,7 @@ int     main()
 
     sprint_ret = snprintf(sprint_buff, 1337,"ret value = %d,  error value = %d -> %s", ret, errno_ret, strerror(errno_ret));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
 
     ret = read(fd, buff, 1337);
     errno_ret = errno;
@@ -86,7 +86,7 @@ int     main()
 
     sprint_ret = snprintf(sprint_buff, 1337, "|%s|",ft_strdup("hello world"));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
     
     printf("|%s|\n",strdup("hello world"));
     
@@ -96,7 +96,7 @@ int     main()
     xd = ft_strdup(str);
     sprint_ret = snprintf(sprint_buff, 1337, "|%s|",xd);
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
     
     xd1 = strdup(str);
     printf("|%s|\n",xd1);
@@ -113,7 +113,7 @@ int     main()
 
     sprint_ret = snprintf(sprint_buff, 1337, "|%s|", ft_strcpy(dst1,src));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
 
     printf("|%s|\n", strcpy(dst2,src));
     
@@ -128,7 +128,7 @@ int     main()
 
     sprint_ret = snprintf(sprint_buff, 1337, "|%s|",dst1);
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
 
     printf("|%s|\n",dst2);
     
@@ -149,9 +149,9 @@ int     main()
 
     sprint_ret = snprintf(sprint_buff, 1337, "\nret value = %d,  error value = %d -> %s", ret, errno, strerror(errno));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
 
-    printf("\tret value = %d,  error value = %d : %s\n", ret, errno, strerror(errno));
+    printf("\tret value = %d,  error value = %d -> %s\n", ret, errno, strerror(errno));
     
     printf(GRN "%s\t%s\n%s\t%s\n%s%s%s\t%s%s%s\n",F_H,F_H,S_H,S_H,T1_H,"ft_strlen",T2_H,T1_H,"--strlen-",T2_H);
     printf(RESET);
@@ -169,7 +169,7 @@ int     main()
     ecole[1337] = '\0';
     sprint_ret = snprintf(sprint_buff, 1337, "len = |%zu|",ft_strlen(ecole));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
     printf("len = |%zu|\n",strlen(ecole));
    
     printf(GRN "%s\t%s\n%s\t%s\n%s%s%s\t%s%s%s\n",F_H,F_H,S_H,S_H,T1_H,"ft_strcmp",T2_H,T1_H,"--strcmp-",T2_H);
@@ -181,7 +181,7 @@ int     main()
     char    cmp2[] = "Wth";
     sprint_ret = snprintf(sprint_buff, 1337, "\"%s\" \"%s\" ==> |%d|",cmp1, cmp2, ft_strcmp(cmp1, cmp2));
     printf("%s",sprint_buff);
-    print_tab(80 - sprint_ret);
+    print_spaces(80 - sprint_ret);
 
     printf("\"%s\" \"%s\" ==> |%d|\n",cmp1, cmp2, strcmp(cmp1, cmp2));
     

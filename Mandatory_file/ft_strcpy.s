@@ -1,4 +1,4 @@
-global _ft_strcpy:
+global _ft_strcpy
 section .text
 
 _ft_strcpy:   ;rax ft_strcpy(rdi, rsi)
