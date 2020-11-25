@@ -60,7 +60,7 @@ int     main()
     /********************************ft_read**********************************/
     int     fd = open("./main.c", O_RDONLY);
     char    *buff = calloc(sizeof(char), 1337 + 1);
-    int     ret = read(fd, buff, 1337);
+    int     ret = ft_read(-1, buff, 1337);
     int     errno_ret = errno;
 
     printf(CYN "%s\n",buff+3);
@@ -73,7 +73,7 @@ int     main()
     printf("%s",sprint_buff);
     print_spaces(80 - sprint_ret);
 
-    ret = read(fd, buff, 1337);
+    ret = read(-1, buff, 1337);
     errno_ret = errno;
     printf("ret value = %d,  error value = %d -> %s\n", ret, errno_ret, strerror(errno_ret));
     

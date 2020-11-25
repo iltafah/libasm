@@ -61,8 +61,8 @@ _compare:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 _swap:
-    mov     [r15], dword ebp
-    mov     [r12], dword ebx
+    mov     [r15], qword rbp
+    mov     [r12], qword rbx
 
 ;/////////////////write//////////////
 push    rdi                         ;
@@ -80,7 +80,7 @@ pop     rdi                         ;
     
     pop rbp
     pop rbx
-jmp     _loop_list
+jmp     _inc_next
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _inc_next:
     mov     r12, [r12 + 8]
