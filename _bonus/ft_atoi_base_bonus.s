@@ -64,7 +64,7 @@ _ft_atoi_base_1:
     pop     rcx;
     ret
 _ft_atoi_base_error:
-    mov     rax, 0
+    mov     rax, -42
     pop     r8
     pop     rcx;
     ret
@@ -113,7 +113,11 @@ _check_errors:
     mov     cl, byte '-'
     cmp     dil, cl
     je      _return_error
-
+    cmp     [rsi], byte 0
+    jne      _check_errors_loop
+_exit:
+    mov     rax, 0
+    ret
 _check_errors_loop:
     xor     rcx, rcx
     mov     cl, byte [rsi]
@@ -133,7 +137,6 @@ _check_num:
     cmp     [rdi], byte 0
     jz     _check_num_error
 _check_num_loop:
-
     push    rdi
     push    rsi
     xor     rcx, rcx
@@ -142,10 +145,8 @@ _check_num_loop:
     call    _check_existence
     pop     rsi
     pop     rdi
-
     cmp     rax, 0
     je      _check_num_error
-
     inc     rdi
     inc     r8
     cmp     [rdi], byte 0

@@ -185,10 +185,10 @@ int     main()
 //0a
    //printf("atoi = |%d|\n",atoi_base("b", "cab"));
     //printf("ft_atoi = |%d|\n",ft_atoi_base("b", "cab"));
-    //printf("atoi = |%d|\n",atoi_base("0a", "0a"));
-    //printf("ft_atoi = |%d|\n",ft_atoi_base("0a", "0a"));
-	printf("%d\n",ft_atoi_base("-1af", "0123456789abcdef"));
-    printf("%d\n",atoi_base("-1af", "0123456789abcdef"));
+    printf("ft_atoi_base = |%d|\n",ft_atoi_base("a", "0a"));
+    printf("atoi_base = |%d|\n",atoi_base("a", "0a"));
+    //printf("%d\n",atoi_base("+10100111001", "0123"));
+	//printf("%d\n",ft_atoi_base("+10100111001", "0123"));
 
 	return (0);
 }
