@@ -2,25 +2,29 @@ global      _ft_atoi_base
 section     .text
 
 _ft_atoi_base:                  ;rax    ft_atoi_base(rdi, rsi)
-    push    rcx
+    push    rbx
     push    r8
     xor     r12, r12            ;d_base
     xor     r13, r13            ;count
     xor     r14, r14            ;neg
     xor     r15, r15            ;num
-    xor     rcx, rcx
+    xor     rbx, rbx
     xor     r8, r8
-    mov     ecx, dword -1
+    cmp     rdi, 0
+    jz      _ft_atoi_base_error
+    cmp     rsi, 0
+    jz      _ft_atoi_base_error
+    mov     ebx, dword -1
     mov     r14d, dword 1
     mov     r8b, byte '-'
     cmp     [rdi], r8b
-    cmove   r14d, ecx
-    xor     rcx, rcx
-    mov     cl, byte '+'
-    cmp     [rdi], cl
+    cmove   r14d, ebx
+    xor     rbx, rbx
+    mov     bl, byte '+'
+    cmp     [rdi], bl
     je      _increment
-    mov     cl, byte '-'
-    cmp     [rdi], cl
+    mov     bl, byte '-'
+    cmp     [rdi], bl
     je      _increment
     jmp     _ft_atoi_base_1
 _increment:
@@ -64,54 +68,54 @@ _ft_atoi_base_1:
     pop     rcx;
     ret
 _ft_atoi_base_error:
-    mov     rax, -42
+    mov     rax, 0
     pop     r8
     pop     rcx;
     ret
  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _check_base:                    ;rax  check_base(rdi)
-    push    rbx
-    push    r12
-    mov     r12, 0
-    mov     rbx, rdi
-    inc     rbx
+    push    r8
+    push    r9
+    mov     r9, 0
+    mov     r8, rdi
+    inc     r8
 _check_base_loop:
-    cmp     [rdi + r12], byte 0
+    cmp     [rdi + r9], byte 0
     jz      _check_base_ret
     push    rdi
     push    rsi
-    push    rbx
-    xor     rcx, rcx
-    mov     cl, byte [rdi + r12]
-    movzx   rdi, cl
-    mov     rsi, rbx
+    push    r8
+    xor     rbx, rbx
+    mov     bl, byte [rdi + r9]
+    movzx   rdi, bl
+    mov     rsi, r8
     call    _check_errors       ;check if there is an error and return 1 in rax if there is
-    pop     rbx
+    pop     r8
     pop     rsi
     pop     rdi
     cmp     rax, 1
     jz      _check_base_ret
-    inc     r12
-    inc     rbx
+    inc     r8
+    inc     r9
     jmp     _check_base_loop
 _check_base_ret:
     xor     rbx, rbx
     mov     ebx, 0
     cmp     rax, 1
-    cmove   r12d, ebx
-    mov     rax, r12
-    pop     r12
+    cmove   r9d, ebx
+    mov     rax, r9
+    pop     r9
     pop     rbx
     ret
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _check_errors:
-    xor     rcx, rcx
-    mov     cl, byte '+'
-    cmp     dil, cl
+    xor     rbx, rbx
+    mov     bl, byte '+'
+    cmp     dil, bl
     je      _return_error
-    xor     rcx, rcx
-    mov     cl, byte '-'
-    cmp     dil, cl
+    xor     rbx, rbx
+    mov     bl, byte '-'
+    cmp     dil, bl
     je      _return_error
     cmp     [rsi], byte 0
     jne      _check_errors_loop
@@ -119,9 +123,9 @@ _exit:
     mov     rax, 0
     ret
 _check_errors_loop:
-    xor     rcx, rcx
-    mov     cl, byte [rsi]
-    cmp     dil, cl
+    xor     rbx, rbx
+    mov     bl, byte [rsi]
+    cmp     dil, bl
     je      _return_error
     inc     rsi
     cmp     [rsi], byte 0
@@ -139,9 +143,9 @@ _check_num:
 _check_num_loop:
     push    rdi
     push    rsi
-    xor     rcx, rcx
-    mov     cl, byte [rdi]
-    movsx   rdi, byte cl
+    xor     rbx, rbx
+    mov     bl, byte [rdi]
+    movsx   rdi, byte bl
     call    _check_existence
     pop     rsi
     pop     rdi
@@ -158,10 +162,10 @@ _check_num_error:
     ret
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _check_existence:
-    xor     rcx, rcx
+    xor     rbx, rbx
 _check_existence_loop:
-    mov     cl, byte [rsi]
-    cmp     dil, cl
+    mov     bl, byte [rsi]
+    cmp     dil, bl
     jz      _check_existence_error
     inc     rsi
     cmp     [rsi], byte 0
@@ -184,8 +188,9 @@ _convert_num_to_decimal:
 _convert_num_to_decimal_loop:
     push    rdi
     push    rsi
-    mov     r8b, byte [rdi + rcx]   ;not sure about this line
-    movzx   rdi, byte r8b 
+    xor     rbx, rbx
+    mov     bl, byte [rdi + rcx]   ;not sure about this line
+    movzx   rdi, byte bl 
     call    _get_value
     pop     rsi
     pop     rdi
@@ -208,15 +213,16 @@ _convert_num_to_decimal_ret:
     ret
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _get_value:
-    push    r8
+    ;push    r8
+    xor     rbx, rbx
     mov     rax, 0
 _get_value_loop:
-    mov     r8b, byte [rsi + rax]
-    cmp     dil, r8b
+    mov     bl, byte [rsi + rax]
+    cmp     dil, bl
     je      _get_value_ret
     inc     rax
     cmp     [rsi + rax], byte 0
     jne     _get_value_loop
 _get_value_ret:
-    pop     r8
+    ;pop     r8
     ret

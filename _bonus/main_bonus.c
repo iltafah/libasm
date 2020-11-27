@@ -2,113 +2,165 @@
 #include <stdlib.h>
 #include <string.h>
 
-// typedef struct		s_list
-// {
-// 	void			*data;
-// 	struct s_list	*next;
-// }					t_list;
+typedef struct		s_list
+{
+	void			*data;
+	struct s_list	*next;
+}					t_list;
 
-// t_list		*ft_lstnew(void *data)
-// {
-// 	t_list	*list;
+t_list		*ft_lstnew(void *data)
+{
+	t_list	*list;
 
-// 	if (!(list = (t_list*)malloc(sizeof(t_list))))
-// 		return (NULL);
-// 	list->data = data;
-// 	list->next = NULL;
-// 	return (list);
-// }
+	if (!(list = (t_list*)malloc(sizeof(t_list))))
+		return (NULL);
+	list->data = data;
+	list->next = NULL;
+	return (list);
+}
 
-// int		ft_lstsize_bonus(t_list *lst)
-// {
-// 	int		size;
+int		ft_lstsize_bonus(t_list *lst)
+{
+	int		size;
 
-// 	size = 0;
-// 	while (lst)
-// 	{
-// 		size++;
-// 		lst = lst->next;
-// 	}
-// 	return (size);
-// }
-
-// /*
-// void	ft_lstadd_front_bonus(t_list **alst, t_list *new)
-// {
-// 	if (new)
-// 	{
-// 		new->next = *alst;
-// 		*alst = new;
-// 	}
-// }*/
-
-// t_list	*ft_create_elem(void *data)
-// {
-// 	t_list	*elem;
-// 	elem = malloc(sizeof(t_list));
-
-// 	if (elem)
-// 	{
-// 		elem->data = data;
-// 		elem->next = NULL;
-// 	}
-// 	return (elem);
-// }
-
-// void	ft_list_push_front_bonus(t_list **begin_list, void *data)
-// {
-// 	t_list	*ptr;
-
-// 	ptr = ft_create_elem(data);
-// 	ptr->next = *begin_list;
-// 	*begin_list = ptr;
-// }
-
-// void	ft_list_sort_bonus(t_list **begin_list, int (*cmp)())
-// {
-// 	void	*keep;
-// 	t_list	*list;
-// 	t_list	*next_ptr;
-
-// 	list = *begin_list;
-// 	if (*begin_list)
-// 	{
-// 		while (list)
-// 		{
-// 			next_ptr = list->next;
-// 			while (next_ptr)
-// 			{
-// 				if ((*cmp)(list->data, next_ptr->data) >= 0)         // 2 5 1 3 0 4
-// 				{
-// 					keep = list->data;
-// 					list->data = next_ptr->data;
-// 					next_ptr->data = keep;
-// 				}
-// 				next_ptr = next_ptr->next;
-// 			}
-// 			list = list->next;
-// 		}
-// 	}
-// }
-
-// int		ft_lstsize(t_list *lst);
-// void	ft_list_push_front(t_list **begin_list, void *data);
-// void	ft_list_sort(t_list **begin_list, int (*cmp)());
+	size = 0;
+	while (lst)
+	{
+		size++;
+		lst = lst->next;
+	}
+	return (size);
+}
 
 
-// int		intcmp(int a, int b)
-// {
-// 	//printf("%d <><><><> %d  ===> %d >> %s\n",a,b,a - b, a-b >= 0 ? "j" : "dnj");
-// 	//printf("%p\n",0x0 - 0x4);
-// 	int sum = a - b;
-// 	return (sum);
-// }
+void	ft_lstadd_front_bonus(t_list **alst, t_list *new)
+{
+	if (new)
+	{
+		new->next = *alst;
+		*alst = new;
+	}
+}
+
+t_list	*ft_create_elem(void *data)
+{
+	t_list	*elem;
+	elem = malloc(sizeof(t_list));
+
+	if (elem)
+	{
+		elem->data = data;
+		elem->next = NULL;
+	}
+	return (elem);
+}
+
+void	ft_list_push_front_bonus(t_list **begin_list, void *data)
+{
+	t_list	*ptr;
+
+	ptr = ft_create_elem(data);
+	ptr->next = *begin_list;
+	*begin_list = ptr;
+}
+
+void	ft_list_sort_bonus(t_list **begin_list, int (*cmp)())
+{
+	void	*keep;
+	t_list	*list;
+	t_list	*next_ptr;
+
+	list = *begin_list;
+	if (*begin_list)
+	{
+		while (list)
+		{
+			next_ptr = list->next;
+			while (next_ptr)
+			{
+				if ((*cmp)(list->data, next_ptr->data) >= 0)         // 2 5 1 3 0 4
+				{
+					keep = list->data;
+					list->data = next_ptr->data;
+					next_ptr->data = keep;
+				}
+				next_ptr = next_ptr->next;
+			}
+			list = list->next;
+		}
+	}
+}
+
+//////////////////////////////////////////////
+void	remove_it_from_start(t_list **curr, void *data_ref, int (*cmp)(), t_list **next)
+{
+	while (*curr && (*cmp)((*curr)->data, data_ref) == 0)
+	{
+		*next = (*curr)->next;
+		free(*curr);
+		*curr = *next;
+	}
+}
+
+void	free_it(t_list **prev, t_list **curr, t_list **next)
+{
+	(*prev)->next = *next;
+	free(*curr);
+	*curr = *next;
+}
+
+void	list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)())
+{
+	t_list	*curr;
+	t_list	*next;
+	t_list	*prev;
+
+	if (begin_list)
+	{
+		curr = *begin_list;
+		next = NULL;
+		remove_it_from_start(&curr, data_ref, cmp, &next);
+		*begin_list = curr;
+		if (curr)
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+		while (curr)
+		{
+			next = curr->next;
+			if ((*cmp)(curr->data, data_ref) == 0)
+				free_it(&prev, &curr, &next);
+			else
+			{
+				prev = curr;
+				curr = curr->next;
+			}
+		}
+	}
+}
+//////////////////////////////////////////////
+
+int		ft_lstsize(t_list *lst);
+void	ft_list_push_front(t_list **begin_list, void *data);
+void	ft_list_sort(t_list **begin_list, int (*cmp)());
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+
+
+
+int		intcmp(int a, int b)
+{
+	//printf("%d <><><><> %d  ===> %d >> %s\n",a,b,a - b, a-b >= 0 ? "j" : "dnj");
+	//printf("%p\n",0x0 - 0x4);
+	int sum = a - b;
+	return (sum);
+}
 int     atoi_base(char *str, char *base);
 int     ft_atoi_base(char *str, char *base);
 
 int     main()
 {
-   /* void    *data;
+    void    *data;
 	t_list	*tmp;
 	t_list	*NULL_list = NULL;
 	//int		*arr;
@@ -117,78 +169,109 @@ int     main()
 	//printf("%zu %zu\n", sizeof(int), sizeof(arr));
    
    
-	printf(";;;;;;;;;;;;;;;;;;;;;;;integer;;;;;;;;;;;;;;;;;;;;;;;\n");
-    t_list  *my_list;
-    my_list = ft_lstnew((void*)-3);
-	my_list->next = ft_lstnew((void*)4); 
-    my_list->next->next = ft_lstnew((void*)1);
-    my_list->next->next->next = ft_lstnew((void*)0);
-    my_list->next->next->next->next = ft_lstnew((void*)2);
-    my_list->next->next->next->next->next = ft_lstnew((void*)-1);
-    my_list->next->next->next->next->next->next = ft_lstnew((void*)3);
-	my_list->next->next->next->next->next->next->next = ft_lstnew((void*)5);
-    my_list->next->next->next->next->next->next->next->next = ft_lstnew((void*)-2);
+	// printf(";;;;;;;;;;;;;;;;;;;;;;;integer;;;;;;;;;;;;;;;;;;;;;;;\n");
+    // t_list  *my_list;
+    // my_list = ft_lstnew((void*)-3);
+	// my_list->next = ft_lstnew((void*)4); 
+    // my_list->next->next = ft_lstnew((void*)1);
+    // my_list->next->next->next = ft_lstnew((void*)0);
+    // my_list->next->next->next->next = ft_lstnew((void*)2);
+    // my_list->next->next->next->next->next = ft_lstnew((void*)-1);
+    // my_list->next->next->next->next->next->next = ft_lstnew((void*)3);
+	// my_list->next->next->next->next->next->next->next = ft_lstnew((void*)5);
+    // my_list->next->next->next->next->next->next->next->next = ft_lstnew((void*)-2);
 
-	printf("list size is = %d\n", ft_lstsize(my_list));
-	tmp = my_list;
-	while (tmp)
-	{
-        printf("%d\n", (int)tmp->data);
-		tmp = tmp->next;
-	}
+	// printf("list size is = %d\n", ft_lstsize(my_list));
+	// tmp = my_list;
+	// while (tmp)
+	// {
+    //     printf("%d\n", (int)tmp->data);
+	// 	tmp = tmp->next;
+	// }
     
-	printf("==========before sorting=========\n");
+	// printf("==========before sorting=========\n");
 
-	ft_list_sort(&my_list, intcmp);
+	// ft_list_sort(&my_list, intcmp);
 
-	printf("===========after sorting=========\n");
-	tmp = my_list;
-	while (tmp)
-	{
-        printf("%d\n", (int)tmp->data);
-		tmp = tmp->next;
-	}
+	// printf("===========after sorting=========\n");
+	// tmp = my_list;
+	// while (tmp)
+	// {
+    //     printf("%d\n", (int)tmp->data);
+	// 	tmp = tmp->next;
+	// }
 
-	printf(";;;;;;;;;;;;;;;;;;;;;;;string;;;;;;;;;;;;;;;;;;;;;;;\n");
-	t_list  *my_list2;
-	my_list2 = ft_lstnew((void*)"3");
-	my_list2->next = ft_lstnew((void*)"4"); 
-    my_list2->next->next = ft_lstnew((void*)"1");
-	my_list2->next->next->next = ft_lstnew((void*)"0");
-    my_list2->next->next->next->next = ft_lstnew((void*)"2");
+	// printf(";;;;;;;;;;;;;;;;;;;;;;;string;;;;;;;;;;;;;;;;;;;;;;;\n");
+	// t_list  *my_list2;
+	// my_list2 = ft_lstnew((void*)"3");
+	// my_list2->next = ft_lstnew((void*)"4"); 
+    // my_list2->next->next = ft_lstnew((void*)"1");
+	// my_list2->next->next->next = ft_lstnew((void*)"0");
+    // my_list2->next->next->next->next = ft_lstnew((void*)"2");
 
 	
 
-    printf("list size is = %d\n", ft_lstsize(my_list2));
-	tmp = my_list2;
-	while (tmp)
-	{
-        printf("%s\n", tmp->data);
-		tmp = tmp->next;
-	}
+    // printf("list size is = %d\n", ft_lstsize(my_list2));
+	// tmp = my_list2;
+	// while (tmp)
+	// {
+    //     printf("%s\n", tmp->data);
+	// 	tmp = tmp->next;
+	// }
     
-	printf("==========before sorting=========\n");
+	// printf("==========before sorting=========\n");
 
-	//ft_list_sort(&my_list, intcmp);
-	ft_list_sort(&my_list2, &strcmp);
+	// //ft_list_sort(&my_list, intcmp);
+	// ft_list_sort(&my_list2, &strcmp);
 
-	printf("===========after sorting=========\n");
-	tmp = my_list2;
+	// printf("===========after sorting=========\n");
+	// tmp = my_list2;
+	// while (tmp)
+	// {
+    //     printf("%s\n", tmp->data);
+	// 	tmp = tmp->next;
+	// }
+////////////////////////////////////////////////////////////////////////////
+    t_list  *my_list3;
+    my_list3 = ft_lstnew((void*)"e");
+	my_list3->next = ft_lstnew((void*)"x"); 
+    my_list3->next->next = ft_lstnew((void*)"b");
+	my_list3->next->next->next = ft_lstnew((void*)"c");
+    my_list3->next->next->next->next = ft_lstnew((void*)"d");
+    my_list3->next->next->next->next->next = ft_lstnew((void*)"A");
+    my_list3->next->next->next->next->next->next = ft_lstnew((void*)"A");
+    my_list3->next->next->next->next->next->next->next = ft_lstnew((void*)"g");
+    
+    //list_remove_if(&my_list3, "A", strcmp);
+    ft_list_remove_if(&my_list3, "A", strcmp);
+    //printf("===========after removing=========\n");
+    tmp = my_list3;
+	t_list *next;
 	while (tmp)
 	{
+		next = tmp->next;
         printf("%s\n", tmp->data);
-		tmp = tmp->next;
+		//free(tmp);
+		tmp = next;
 	}
-	*/
+////////////////////////////////////////////////////////////////////////////
 	//char    *str = strdup("-135");              //base 10 = (1 * 10^2) + (3 * 10^1) + (5 * 10^0) = 100 + 30 + 5 = 135
     //char    *base = strdup("0123456789abcdef");
 //0a
-   //printf("atoi = |%d|\n",atoi_base("b", "cab"));
-    //printf("ft_atoi = |%d|\n",ft_atoi_base("b", "cab"));
-    printf("ft_atoi_base = |%d|\n",ft_atoi_base("a", "0a"));
-    printf("atoi_base = |%d|\n",atoi_base("a", "0a"));
-    //printf("%d\n",atoi_base("+10100111001", "0123"));
-	//printf("%d\n",ft_atoi_base("+10100111001", "0123"));
+    // printf("atoi_base = |%d|\n",atoi_base("", "cab"));
+    // printf("ft_atoi = |%d|\n",ft_atoi_base("", "cab"));
+    // printf("atoi_base = |%d|\n",atoi_base("13", ""));
+    // printf("ft_atoi = |%d|\n",ft_atoi_base("13", ""));
+    // printf("atoi_base = |%d|\n",atoi_base("13", NULL));
+    // printf("ft_atoi = |%d|\n",ft_atoi_base("13", NULL));
+    // printf("atoi_base = |%d|\n",atoi_base(NULL, "0123"));
+    // printf("ft_atoi = |%d|\n",ft_atoi_base(NULL, "0123"));
+    // printf("atoi_base = |%d|\n",atoi_base("b", "cab"));
+    // printf("ft_atoi = |%d|\n",ft_atoi_base("b", "cab"));
+    // printf("atoi_base = |%d|\n",atoi_base("a", "0a"));
+    // printf("ft_atoi_base = |%d|\n",ft_atoi_base("a", "0a"));
+    // printf("atoi_base = |%d|\n",atoi_base("+10100111001", "01"));
+	// printf("ft_atoi_base = |%d|\n",ft_atoi_base("+10100111001", "01"));
 
 	return (0);
 }
@@ -279,6 +362,8 @@ int     atoi_base(char *str, char *base)
     int     num;
     int     neg;
    
+    if (!str || !base)
+        return(0);
     neg = *str == '-' ? -1 : 1;
     if (*str == '-' || *str == '+')
         str++;
