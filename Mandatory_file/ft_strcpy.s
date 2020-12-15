@@ -1,7 +1,7 @@
 global _ft_strcpy
 section .text
 
-_ft_strcpy:   ;rax ft_strcpy(rdi, rsi)
+_ft_strcpy:					;rax ft_strcpy(rdi, rsi)
 	xor rcx, rcx
 	mov rcx, 0
 

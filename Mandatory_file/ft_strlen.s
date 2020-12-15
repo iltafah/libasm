@@ -2,22 +2,17 @@ global _ft_strlen:
 section .text
 
 _ft_strlen:
-
-  push  rcx            ; save and clear out counter
+  push  rcx
   xor   rcx, rcx
 
 _strlen_next:
-
-  cmp   [rdi], byte 0  ; null byte yet?
-  jz    _strlen_null   ; yes, get out
-
-  inc   rcx            ; char is ok, count it
-  inc   rdi            ; move to next char
-  jmp   _strlen_next   ; process again
+  cmp   [rdi], byte 0
+  jz    _strlen_null
+  inc   rcx
+  inc   rdi
+  jmp   _strlen_next
 
 _strlen_null:
-
-  mov   rax, rcx       ; rcx = the length (put in rax)
-
-  pop   rcx            ; restore rcx
-  ret                  ; get out
+  mov   rax, rcx       
+  pop   rcx            
+  ret                  

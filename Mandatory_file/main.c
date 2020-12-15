@@ -8,13 +8,6 @@
 || 1337            1337            1337       1337      ||                      ;; LLLLLLL IIIIIIII  BBBBBBB   AA   AA    SSSSS    MM        MM  ;;
 || 1337    133713371337    133713371337      1337       ||                      ;;                                                               ;;
 ==========================================================                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;   
-
-
-
-
-
-
-
 */
 #include <stdio.h>
 #include <string.h>
@@ -58,9 +51,9 @@ int     main()
     /*-----------------------------------------------------------------------*/
     ///////////////////////////////////////////////////////////////////////////
     /********************************ft_read**********************************/
-    int     fd = open("./main.c", O_RDONLY);
+    int     fd = open("./Mandatory_file/main.c", O_RDONLY);                    //you should compile this main in Makefile directory
     char    *buff = calloc(sizeof(char), 1337 + 1);
-    int     ret = ft_read(-1, buff, 1337);
+    int     ret = ft_read(fd, buff, 1337);
     int     errno_ret = errno;
 
     printf(CYN "%s\n",buff+3);
@@ -73,7 +66,7 @@ int     main()
     printf("%s",sprint_buff);
     print_spaces(80 - sprint_ret);
 
-    ret = read(-1, buff, 1337);
+    ret = read(fd, buff, 1337);
     errno_ret = errno;
     printf("ret value = %d,  error value = %d -> %s\n", ret, errno_ret, strerror(errno_ret));
     
@@ -184,7 +177,7 @@ int     main()
     print_spaces(80 - sprint_ret);
 
     printf("\"%s\" \"%s\" ==> |%d|\n",cmp1, cmp2, strcmp(cmp1, cmp2));
-    
+       
     printf(GRN "%s\t%s\n%s\t%s\n%s%s%s\t%s%s%s\n",F_H,F_H,S_H,S_H,T1_H,"-ft_end--",T2_H,T1_H,"---end---",T2_H);
     printf(RESET);
     /*-----------------------------------------------------------------------*/

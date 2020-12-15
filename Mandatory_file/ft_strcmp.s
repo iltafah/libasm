@@ -1,10 +1,8 @@
 global _ft_strcmp
 section .text
 
-_ft_strcmp: ;rax ft_strcmp(rdi, rsi)
+_ft_strcmp: 			;rax ft_strcmp(rdi, rsi)
 	cmp [rdi], byte 0
-	jz _ft_strcmp_null
-	cmp [rsi], byte 0
 	jz _ft_strcmp_null
 	mov al, [rdi]
 	cmp al, [rsi]
