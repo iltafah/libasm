@@ -17,13 +17,17 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#define RED   "\x1B[31m"
-#define GRN   "\x1B[32m"
-#define YEL   "\x1B[33m"
-#define BLU   "\x1B[34m"
-#define MAG   "\x1B[35m"
-#define CYN   "\x1B[36m"
-#define WHT   "\x1B[37m"
+//special thanks to https://gist.github.com/RabaDabaDoba/145049536f815903c79944599c6f952a for the colors formats.
+
+//Bold high intensity text
+#define BLK "\e[1;90m"
+#define RED "\e[1;91m"
+#define GRN "\e[1;92m"
+#define YEL "\e[1;93m"
+#define BLU "\e[1;94m"
+#define MAG "\e[1;95m"
+#define CYN "\e[1;96m"
+#define WHT "\e[1;97m"
 #define RESET "\x1B[0m"
 
 #define F_H     "/*-----------------------------------------------------------------------*/"

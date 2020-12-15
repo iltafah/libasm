@@ -6,6 +6,7 @@ _ft_list_size:      ;rax    ft_lstsize_bonus(rdi)
     xor     r12, r12
     cmp     rdi, 0
     jz      ft_1
+
 ft_loop:
     inc     r12
     mov     r8, [rdi + 8]

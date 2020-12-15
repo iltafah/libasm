@@ -92,7 +92,7 @@ _remove_it_from_start_loop:
 _remove_it_from_start_exit:
     mov     rax, 0
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 _free_it:
     push    rsp
     mov     [r14 + 8], r13             ;(*prev)->next = *next
