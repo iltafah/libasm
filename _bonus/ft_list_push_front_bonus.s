@@ -3,6 +3,8 @@ section .text
 extern  _malloc
 
 _ft_list_push_front:     ;rax    ft_list_push_front(rdi, rsi)
+    cmp     rdi, 0
+    jz      exit
     push    r12
     push    rdi
     push    rsi
@@ -15,5 +17,7 @@ _ft_list_push_front:     ;rax    ft_list_push_front(rdi, rsi)
     mov     [rax + 8], r12
     mov     [rdi], rax
     pop     r12
+
+exit:
     mov     rax, 0
     ret

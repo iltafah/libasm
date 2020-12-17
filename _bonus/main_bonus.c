@@ -359,17 +359,17 @@ void	free_list(t_list **list)																			//
 		}																									//
 	}																										//
 }																											//
-
-void	print_header()
-{
-	int     fd = open("./_bonus/main_bonus.c", O_RDONLY);
-    char    *buff = calloc(sizeof(char), 1337 + 1);
-    read(fd, buff, 1337);
-
-	printf(CYN "%s\n",buff+3);
-    printf(RESET);
-	free(buff);
-}
+																											//
+void	print_header()																						//
+{																											//
+	int     fd = open("./_bonus/main_bonus.c", O_RDONLY);													//
+    char    *buff = calloc(sizeof(char), 1337 + 1);															//
+    read(fd, buff, 1337);																					//
+																											//
+	printf(CYN "%s\n",buff+3);																				//
+    printf(RESET);																							//
+	free(buff);																								//
+}																											//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 //													MAIN													//
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

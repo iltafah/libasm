@@ -13,6 +13,6 @@ _strlen_next:
   jmp   _strlen_next
 
 _strlen_null:
-  mov   rax, rcx       
+  mov   rax, rcx
   pop   rcx            
-  ret                  
+  ret

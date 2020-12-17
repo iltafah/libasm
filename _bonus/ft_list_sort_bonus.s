@@ -5,13 +5,13 @@ _ft_list_sort:  ;   rax  ft_list_sort(rdi, rsi)
     push    r12
     push    r15
     cmp     rdi, 0              ;list = NULL
-    jz      _NULL               ;list  ?= 0
+    jz      _exit               ;list  ?= 0
     mov     r15, [rdi]          ;list = *begin_list
     cmp     r15, 0              ;list ?= 0
-    jz      _NULL2
+    jz      _exit
     mov     r12, [r15 + 8]      ;n_ptr = list->next
     cmp     r12, 0
-    jz      _NULL
+    jz      _exit
 
 _loop_list:
     push    rbx
@@ -30,15 +30,15 @@ _compare:
     pop     rdi
     cmp     eax, dword 0
     jge     _swap
-    pop rbp
-    pop rbx
+    pop     rbp
+    pop     rbx
     jmp     _inc_next
 
 _swap:
     mov     [r15], qword rbp
     mov     [r12], qword rbx
-    pop rbp
-    pop rbx
+    pop     rbp
+    pop     rbx
     jmp     _inc_next
 
 _inc_next:
@@ -50,25 +50,13 @@ _inc_next:
 _inc_list:
     mov     r15, [r15 + 8]
     cmp     r15, 0
-    jz      _end
+    jz      _exit
     mov     r12, [r15 + 8]
     cmp     r12, 0
-    jz      _end
+    jz      _exit
     jmp     _loop_list
-
-_NULL:
-    pop     r15
-    pop     r12
-    mov     rax, 0
-    ret
-
-_NULL2:
-    pop     r15
-    pop     r12
-    mov     rax, 0
-    ret
     
-_end:
+_exit:
     pop     r15
     pop     r12
     mov     rax, 0

@@ -38,7 +38,7 @@ _ft_atoi_base_1:
     pop     rdi
     cmp     rax, 2
     jl      _ft_atoi_base_error
-    mov     r12, rax            ;move the result of check_base to d_base (r12)
+    mov     r12, rax
     push    rdi
     push    rsi
     call    _check_num
@@ -46,7 +46,7 @@ _ft_atoi_base_1:
     pop     rdi
     cmp     rax, 0
     je      _ft_atoi_base_error
-    mov     r13, rax            ;move the result of check_num to count (r13)
+    mov     r13, rax            
     push    rdi                 ;str
     push    rsi                 ;base
     push    rdx
@@ -58,7 +58,7 @@ _ft_atoi_base_1:
     pop     rdx
     pop     rsi
     pop     rdi
-    mov     r15, rax            ;move the result of convert_num_to_decimal to num (r15)
+    mov     r15, rax            
     mov     r12, r15
     neg     r12
     cmp     r14, 1
@@ -72,7 +72,9 @@ _ft_atoi_base_error:
     pop     r8
     pop     rcx;
     ret
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ 
+ 
+
 _check_base:                    ;rax  check_base(rdi)
     push    r8
     push    r9
@@ -89,7 +91,7 @@ _check_base_loop:
     mov     bl, byte [rdi + r9]
     movzx   rdi, bl
     mov     rsi, r8
-    call    _check_errors       ;check if there is an error and return 1 in rax if there is
+    call    _check_errors       
     pop     r8
     pop     rsi
     pop     rdi
@@ -107,7 +109,9 @@ _check_base_ret:
     pop     r9
     pop     rbx
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 _check_errors:
     xor     rbx, rbx
     mov     bl, byte '+'
@@ -135,7 +139,9 @@ _check_errors_loop:
 _return_error:
     mov     rax, 1
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 _check_num:
     mov     r8, 0
     cmp     [rdi], byte 0
@@ -160,7 +166,9 @@ _check_num_loop:
 _check_num_error:
     mov     rax, 0
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 _check_existence:
     xor     rbx, rbx
 _check_existence_loop:
@@ -175,7 +183,9 @@ _check_existence_loop:
 _check_existence_error:
     mov     rax, 1
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 _convert_num_to_decimal:
     push    r10
     push    r9
@@ -189,7 +199,7 @@ _convert_num_to_decimal_loop:
     push    rdi
     push    rsi
     xor     rbx, rbx
-    mov     bl, byte [rdi + rcx]   ;not sure about this line
+    mov     bl, byte [rdi + rcx]
     movzx   rdi, byte bl 
     call    _get_value
     pop     rsi
@@ -211,7 +221,9 @@ _convert_num_to_decimal_ret:
     pop     r9
     pop     r10
     ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 _get_value:
     xor     rbx, rbx
     mov     rax, 0
